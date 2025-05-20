@@ -28,7 +28,7 @@ class BookingController extends Controller
     public function create(Request $request){
         $data["title"]      = "Tambah Pesanan";
         $data["card_title"] = "Tambah Pesanan";
-        $data["vehincles"]  = Vehincle::where("status", "tersedia")->get();
+        $data["vehicles"]   = Vehicle::where("status", "tersedia")->get();
         $data["drivers"]    = Driver::where("status", "standby")->get();
         $data["approvals_lv_1"] = User::where("role", "approver")->get();
         $data["approvals_lv_2"] = User::where("role", "approval")->get();
@@ -71,13 +71,15 @@ class BookingController extends Controller
         DB::beginTransaction();
         try {
             $vehicleBooking = VehicleBooking::create([
+                "user_id"           => $request->driver_id,
                 "driver_id"         => $request->driver_id,
-                "vehicle_id"        => $request->vehincle_id,
+                "vehicle_id"        => $request->vehicle_id,
                 "start_time"        => $request->booking_date,
+                "location"          => $request->location,
                 "destination"       => $request->destination,
                 "status"            => 'pending',
                 "notes"             => $request->note,
-                "approval_level_1"  => $request->approval_level_1 ,
+                "approval_level_1"  => $request->approval_lv_1 ,
                 // "approval_level_2"  => $request->approval_level_2,
             ]);
         } catch (Exception $e) {
@@ -167,7 +169,7 @@ class BookingController extends Controller
     public function datatable(Request $request){
         $where = [];
 
-        $data = Driver::where($where)->get();
+        $data = VehicleBooking::with(['vehicle', 'driver'])->where($where)->get();
 
         return datatables()->of($data)->toJson();
     }

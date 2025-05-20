@@ -67,9 +67,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Pilih Kendaraan</label>
-                                        <select name="vehincle_id" class="form-control" required>
+                                        <select name="vehicle_id" class="form-control" required>
                                             <option value="">-- Pilih --</option>
-                                            @foreach($vehincles as $vh)
+                                            @foreach($vehicles as $vh)
                                                 <option value="{{ $vh->id }}">{{ $vh->plate_number }} - {{ $vh->brand }}</option>
                                             @endforeach
                                         </select>
@@ -84,6 +84,18 @@
                                                 <option value="{{ $dv->id }}">{{ $dv->name }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Lokasi Kendaraan</label>
+                                        <textarea class="form-control" id="location" name="location"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Tujuan Perjalanan</label>
+                                        <textarea class="form-control" id="destination" name="destination"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">

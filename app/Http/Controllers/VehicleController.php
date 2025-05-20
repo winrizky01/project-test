@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-use App\Models\vehicle;
+use App\Models\Vehicle;
 use DataTables;
 use Validator;
 use DB;

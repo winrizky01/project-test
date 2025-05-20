@@ -66,10 +66,13 @@
                                 <div class="col">
                                     <table class="table table-bordered table-striped datatables">
                                         <thead>
-                                            <th>Nama</th>
-                                            <th>Nomer HP</th>
-                                            <th>Status</th>
-                                            <th>Opsi</th>
+                                            <th>Tanggal Berangkat</th>
+                                            <th>Tanggal Tiba</th>
+                                            <th>Plat Nomor</th>
+                                            <th>Supir</th>
+                                            <th>Tujuan</th>
+                                            <th>Status Dokumen</th>
+                                            <th>Aksi</th>
                                         </thead>
                                     </table>
                                 </div>
@@ -85,9 +88,9 @@
 
     <script>
         // Setup Datatable
-        var ajaxUrl  = "{{ url('drivers/dataTable') }}";
+        var ajaxUrl  = "{{ url('bookings/dataTable') }}";
         var ajaxData = [];
-        var columns  = [{ data: 'name' }, { data: 'phone_number' }, { data: 'status' }, { data: 'action' }];
+        var columns  = [{ data: 'start_time' }, { data: 'end_time' }, { data: 'vehicle.plate_number' }, { data: 'driver.name' }, { data: 'destination' }, { data: 'status' }, { data: 'action' }];
         var columnDefs  =  [
             {
                 targets: 2,
@@ -112,6 +115,7 @@
                 searchable: false,
                 orderable: false,
                 render: function(data, type, full, meta) {
+                    if(full.status == 'pending'){}
                     return (
                         '<div class="d-flex align-items-center">' +
                             '<a href="{{ url("drivers/edit") }}'+'/'+full.id+'" class="btn btn-primary btn-sm edit-record mr-1" data-id="' + full.id + '"><i class="fa fa-edit"></i></a>'+

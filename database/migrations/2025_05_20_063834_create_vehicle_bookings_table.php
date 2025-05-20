@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('vehicle_bookings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // pemesan
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('vehicle_id');
             $table->unsignedBigInteger('driver_id');
             $table->text('location')->nullable();

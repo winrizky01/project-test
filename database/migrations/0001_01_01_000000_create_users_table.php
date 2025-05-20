@@ -18,6 +18,13 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->enum('status', ['active', 'inactive']);
+            $table->datetime('last_login')->nullable();
+            $table->enum('role', ['superadmin', 'admin', 'approver', 'driver']);
+            $table->string('position')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+
             $table->timestamps();
         });
 

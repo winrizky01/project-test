@@ -97,9 +97,9 @@
                                         <label for="approver_level_1">Disetujui oleh (Level 1)</label>
                                         <select name="approver_level_1" class="form-control" required>
                                             <option value="">-- Pilih --</option>
-                                            {{-- @foreach($approvers as $user)
+                                            @foreach($approvals_lv_1 as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->role }}</option>
-                                            @endforeach --}}
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -109,9 +109,9 @@
                                         <label for="approver_level_2">Disetujui oleh (Level 2)</label>
                                         <select name="approver_level_2" class="form-control" required>
                                             <option value="">-- Pilih --</option>
-                                            {{-- @foreach($approvers as $user)
+                                            @foreach($approvals_lv_2 as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->role }}</option>
-                                            @endforeach --}}
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

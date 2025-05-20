@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
+use App\Models\User;
 use App\Models\Vehincle;
 use App\Models\Driver;
 use App\Models\VehicleBooking;
@@ -29,6 +30,9 @@ class BookingController extends Controller
         $data["card_title"] = "Tambah Pesanan";
         $data["vehincles"]  = Vehincle::where("status", "tersedia")->get();
         $data["drivers"]    = Driver::where("status", "standby")->get();
+        $data["approvals_lv_1"] = User::where("role", "approval")->get();
+        $data["approvals_lv_2"] = User::where("role", "approval")->get();
+        
         $view = "pages.booking.create";
         
         return view($view, $data);
@@ -86,6 +90,43 @@ class BookingController extends Controller
         DB::commit();
         // Session::put('success', "Data vehincles success to created!");
         return redirect()->to('drivers')->with('success', 'Data driver success to created');
+    }
+
+    public function approval(Request $request, $id){
+        var_dump($request->all(), $id);die();
+        // $validator = Validator::make($request->all(),[
+        //     'name'              => 'required',
+        //     'phone_number'      => 'required',
+        //     'emergency_name'    => 'required',
+        //     'emergency_phone'   => 'required',
+        //     'license_number'    => 'required',
+        //     'license_expiry_date'=> 'required',
+        // ]);
+
+        // if($validator->fails()){
+        //     // Session::put('error','The following fields are required!');
+        //     return redirect()->back()->with('error', 'Ada yang salah!');
+        // }
+
+        // DB::beginTransaction();
+        // try {
+        //     $vehincle = Vehincle::find($id);
+        //     $vehincle->name                 = $request->name;
+        //     $vehincle->phone_number         = $request->phone_number;
+        //     $vehincle->emergency_name       = $request->emergency_name;
+        //     $vehincle->emergency_phone      = $request->emergency_phone;
+        //     $vehincle->license_number       = $request->license_number;
+        //     $vehincle->license_expiry_date  = $request->license_expiry_date;
+        //     $vehincle->save();
+        // } catch (Exception $e) {
+        //     DB::rollback();
+        //     // Session::put('error', $e->getMessage());
+        //     return redirect()->back()->with('error', 'Ada yang salah!');
+        // }
+
+        // DB::commit();
+        // // Session::put('success', "Data vehincle success to updated!");
+        // return redirect()->to('drivers')->with('success', 'Data vehincles success to updated');
     }
 
     public function update(Request $request, $id){

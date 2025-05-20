@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('driver_id');
             $table->text('location')->nullable();
             $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->dateTime('end_time')->nullable();
             $table->string('destination');
             $table->foreignId('approval_level_1')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('approval_level_2')->nullable()->constrained('users')->onDelete('set null');

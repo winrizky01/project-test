@@ -12,15 +12,16 @@ Route::get('/register', [App\Http\Controllers\AuthController::class, 'register']
 
 Route::group(['middleware'=>['auth']], function(){
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index']);
-    
-    Route::prefix('/vehincles')->group(function(){
-        Route::get('/', [App\Http\Controllers\VehincleController::class, 'index']);
-        Route::get('/select', [App\Http\Controllers\VehincleController::class, 'search']);
-        Route::get('/dataTable', [App\Http\Controllers\VehincleController::class, 'datatable']);
-        Route::get('/create', [App\Http\Controllers\VehincleController::class, 'create']);
-        Route::get('/edit/{id}', [App\Http\Controllers\VehincleController::class, 'edit']);
-        Route::post('/store', [App\Http\Controllers\VehincleController::class, 'store']);
-        Route::post('/update/{id}', [App\Http\Controllers\VehincleController::class, 'update']);
+    Route::get('/dashboard/chart', [App\Http\Controllers\DashboardController::class, 'chartdata']);
+
+    Route::prefix('/vehicles')->group(function(){
+        Route::get('/', [App\Http\Controllers\VehicleController::class, 'index']);
+        Route::get('/select', [App\Http\Controllers\VehicleController::class, 'search']);
+        Route::get('/dataTable', [App\Http\Controllers\VehicleController::class, 'datatable']);
+        Route::get('/create', [App\Http\Controllers\VehicleController::class, 'create']);
+        Route::get('/edit/{id}', [App\Http\Controllers\VehicleController::class, 'edit']);
+        Route::post('/store', [App\Http\Controllers\VehicleController::class, 'store']);
+        Route::post('/update/{id}', [App\Http\Controllers\VehicleController::class, 'update']);
     });
 
     Route::prefix('/drivers')->group(function(){
@@ -51,5 +52,7 @@ Route::group(['middleware'=>['auth']], function(){
     
     Route::prefix('/report')->group(function(){
         Route::get('/', [App\Http\Controllers\ReportController::class, 'index']);
+        Route::get('/dataTable', [App\Http\Controllers\ReportController::class, 'datatable']);
+        Route::get('/download', [App\Http\Controllers\ReportController::class, 'exportExcel']);
     });
 });

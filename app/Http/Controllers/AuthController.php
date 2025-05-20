@@ -39,13 +39,45 @@ class AuthController extends Controller
 
     public function register()
     {
-        User::create([
-            "name"      => "development",
-            "email"     => "development@gmail.com",
-            "password"  => bcrypt("12345678"),
-            "status"    => "active",
-            'created_at'=> date('Y-m-d H:i:s'),
-        ]);
+        $users = [
+            [
+                "name"      => "development",
+                "email"     => "development@gmail.com",
+                "password"  => bcrypt("12345678"),
+                "status"    => "active",
+                "role"      => "superadmin",
+                'created_at'=> date('Y-m-d H:i:s'),
+            ],            
+            [
+                "name"      => "admin",
+                "email"     => "admin@gmail.com",
+                "password"  => bcrypt("12345678"),
+                "status"    => "active",
+                "role"      => "admin",
+                'created_at'=> date('Y-m-d H:i:s'),
+            ],
+            [
+                "name"      => "approval_1",
+                "email"     => "approval_1@gmail.com",
+                "password"  => bcrypt("12345678"),
+                "status"    => "active",
+                "role"      => "approver",
+                'created_at'=> date('Y-m-d H:i:s'),
+            ],
+            [
+                "name"      => "approval_2",
+                "email"     => "approval_2@gmail.com",
+                "password"  => bcrypt("12345678"),
+                "status"    => "active",
+                "role"      => "approver",
+                'created_at'=> date('Y-m-d H:i:s'),
+            ]
+        ];
+
+        foreach ($users as $user) {
+            User::create(array_merge($user, ['created_at' => now()]));
+        }
+        
     }
 
     // Tangani proses logout

@@ -28,10 +28,10 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Rentang Tanggal</label>
-                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control form-control-sm datetimepicker-input" id="datetimepickerValue" placeholder="MM/DD/YYYY" data-target="#reservationdate">
-                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-sm" id="daterange" name="daterange" placeholder="Pilih rentang tanggal">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -53,9 +53,7 @@
                     <div class="card-header">
                         <h3 class="card-title">{{ $card_title }}</h3>
                         <div class="card-tools">
-                            <a href="{{ url('/patient/registration-patient') }}" class="btn btn-primary btn-sm" title="Tambah Pasien">
-                                Tambah Data Pasien
-                            </a>
+                            <button id="btnExportExcel" class="btn btn-success btn-sm" type="submit"><i class="fas fa-file-excel"></i> Export Excel</button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -63,10 +61,11 @@
                             <div class="col">
                                 <table class="table table-bordered table-striped datatables">
                                     <thead>
-                                        <th>No. RM</th>
-                                        <th>Nama Pasien</th>
-                                        <th>Tanggal Terakhir Periksa</th>
-                                        <th>Opsi</th>
+                                        <th>Tanggal Pesanan</th>
+                                        <th>Kendaraan</th>
+                                        <th>Supir</th>
+                                        <th>Tujuan</th>
+                                        <th>Status Pesanan</th>
                                     </thead>
                                 </table>
                             </div>
@@ -80,60 +79,42 @@
 
     <script>
         // Setup Datatable
-        var ajaxUrl  = "{{ url('report/history-patient/dataTable') }}";
+        var ajaxUrl  = "{{ url('report/dataTable') }}";
         var ajaxData = [];
-        var columns  = [{ data: 'patient.number_rekam_medis' }, { data: 'patient.name' }, { data: 'created_at' }, { data: 'action' }];
-        var columnDefs  =  [
-            {
-                targets: 2, // Targetkan kolom 'created_at' (indeks ke-2 dalam array columns)
-                render: function(data, type, full, meta) {
-                    console.log('Original date:', data); // Debug: cek data asli
-                    if (type === 'display' || type === 'filter') {
-                        const date = new Date(data);
-                        const day = String(date.getDate()).padStart(2, '0');
-                        const month = String(date.getMonth() + 1).padStart(2, '0'); // Bulan mulai dari 0
-                        const year = String(date.getFullYear()).slice(-2); // Ambil 2 digit terakhir tahun
-                        const hours = String(date.getHours()).padStart(2, '0');
-                        const minutes = String(date.getMinutes()).padStart(2, '0');
-                        const seconds = String(date.getSeconds()).padStart(2, '0');
-                        return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
-                    }
-                    return data; // Tetap kembalikan data asli untuk kebutuhan sorting atau export
-                }
-            },
-            {
-                // Actions
-                targets: -1,
-                title: 'Actions',
-                searchable: false,
-                orderable: false,
-                render: function(data, type, full, meta) {
-                    return (
-                        '<div class="d-flex align-items-center">' +
-                            '<a href="{{ url("patient-exams/show") }}'+'/'+full.id+'" class="btn btn-primary btn-sm edit-record mr-1" data-id="' + full.id + '"><i class="fa fa-edit"></i></a>'+
-                        '</div>'
-                    );
-                }
-            }
-        ];
+        var columns  = [{ data: 'start_time' }, { data: 'vehicle.plate_number' }, { data: 'driver.name' }, { data: 'destination' }, { data: 'status' }];
+        var columnDefs  =  [];
         var buttons =  [];
         // Setup Datatable
 
         $(document).ready(function() {
             //Date picker
-            $('#reservationdate').datetimepicker({
-                format: 'L'
+            $('#daterange').daterangepicker({
+                locale: {
+                    format: 'MM/DD/YYYY'
+                },
+                opens: 'left' // Atau 'right', sesuaikan
             });
 
             initializeDataTable(ajaxUrl, ajaxData, columns, columnDefs, buttons);
 
             $('#buttonSearch').click(function(){
-                ajaxData = {'date':$('#datetimepickerValue').val()}
+                ajaxData = {'date':$('#daterange').val()}
                 initializeDataTable(ajaxUrl, ajaxData, columns, columnDefs, buttons);
             });
 
             $('#buttonReset').click(function(){
                 $('#datetimepickerValue').val('')
+            });
+
+            $('#btnExportExcel').on('click', function () {
+                let dateRange = $('#daterange').val();
+                let url = '{{ url("report/download") }}';
+
+                if (dateRange) {
+                    url += '?date=' + encodeURIComponent(dateRange);
+                }
+
+                window.location.href = url;
             });
         });
     </script>

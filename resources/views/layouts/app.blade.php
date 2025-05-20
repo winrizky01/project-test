@@ -111,7 +111,7 @@
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="{{ url('/') }}" class="d-block">Alexander Pierce</a>
+                        <a href="{{ url('/') }}" class="d-block">{{ auth()->user()->name }}</a>
                     </div>
                 </div>
 
@@ -130,7 +130,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/vehincles') }}" class="nav-link">
+                            <a href="{{ url('/vehicles') }}" class="nav-link">
                                 <i class="fas fa-circle nav-icon"></i>
                                 <p>Kendaraan</p>
                             </a>

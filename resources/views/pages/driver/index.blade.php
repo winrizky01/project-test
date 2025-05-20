@@ -98,14 +98,6 @@
                 }
             },
             {
-                targets: 3,
-                data: 'phone_number',
-                name: 'phone_number',
-                render: function (data, type, row) {
-                    return data.charAt(0).toUpperCase() + data.slice(1); // kapitalisasi
-                }
-            },
-            {
                 // Actions
                 targets: -1,
                 title: 'Actions',

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
-use App\Models\Vehincle;
+use App\Models\vehicle;
 use App\Models\Driver;
 use App\Models\VehicleBooking;
 use DataTables;
@@ -30,7 +30,7 @@ class BookingController extends Controller
         $data["card_title"] = "Tambah Pesanan";
         $data["vehincles"]  = Vehincle::where("status", "tersedia")->get();
         $data["drivers"]    = Driver::where("status", "standby")->get();
-        $data["approvals_lv_1"] = User::where("role", "approval")->get();
+        $data["approvals_lv_1"] = User::where("role", "approver")->get();
         $data["approvals_lv_2"] = User::where("role", "approval")->get();
         
         $view = "pages.booking.create";
@@ -56,12 +56,11 @@ class BookingController extends Controller
 
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
-            // 'name'              => 'required',
-            // 'phone_number'      => 'required',
-            // 'emergency_name'    => 'required',
-            // 'emergency_phone'   => 'required',
-            // 'license_number'    => 'required',
-            // 'license_expiry_date'=> 'required',
+            'booking_date'   => 'required',
+            'vehicle_id'    => 'required',
+            'driver_id'      => 'required',
+            'approval_lv_1'  => 'required',
+            // 'approval_lv_2'  => 'required',
         ]);
 
         if($validator->fails()){
@@ -73,18 +72,18 @@ class BookingController extends Controller
         try {
             $vehicleBooking = VehicleBooking::create([
                 "driver_id"         => $request->driver_id,
-                "vehincle_id"       => $request->vehincle_id,
-                "start_time"        => $request->start_time,
+                "vehicle_id"        => $request->vehincle_id,
+                "start_time"        => $request->booking_date,
                 "destination"       => $request->destination,
-                "status"            => $request->status,
+                "status"            => 'pending',
                 "notes"             => $request->note,
                 "approval_level_1"  => $request->approval_level_1 ,
-                "approval_level_2"  => $request->approval_level_2,
+                // "approval_level_2"  => $request->approval_level_2,
             ]);
         } catch (Exception $e) {
             DB::rollback();
             // Session::put('error', $e->getMessage());
-            return redirect()->back()->with('error', 'Ada yang salah!');
+            return redirect()->back()->with('error', $e->getMessage());
         }
 
         DB::commit();

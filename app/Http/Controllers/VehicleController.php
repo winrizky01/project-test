@@ -6,18 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-use App\Models\Vehincle;
+use App\Models\vehicle;
 use DataTables;
 use Validator;
 use DB;
 
-class VehincleController extends Controller
+class VehicleController extends Controller
 {
     public function index(Request $request){
         $data["title"] = "List Kendaraan";
         $data["card_title"] = "List Kendaraan";
         
-        $view = "pages.vehincle.index";
+        $view = "pages.vehicle.index";
         
         return view($view, $data);
     }
@@ -26,23 +26,23 @@ class VehincleController extends Controller
         $data["title"]      = "Tambah Kendaraan";
         $data["card_title"] = "Tambah Kendaraan";
         
-        $view = "pages.vehincle.create";
+        $view = "pages.vehicle.create";
         
         return view($view, $data);
     }
 
     public function edit(Request $request, $id){
-        $vehincle = Vehincle::find($id);
-        if(!$vehincle){
+        $vehicle = Vehicle::find($id);
+        if(!$vehicle){
             Session::put('error','Opps, Data not found!');
-            return redirect()->to('vehincles');
+            return redirect()->to('vehicles');
         }
 
         $data["title"]      = "Edit Kendaraan";
         $data["card_title"] = "Edit Kendaraan";
-        $data["data"]       = $vehincle;
+        $data["data"]       = $vehicle;
 
-        $view = "pages.vehincle.edit";
+        $view = "pages.vehicle.edit";
 
         return view($view, $data);
     }
@@ -64,7 +64,7 @@ class VehincleController extends Controller
 
         DB::beginTransaction();
         try {
-            $vehincle = Vehincle::create([
+            $vehicle = Vehicle::create([
                 "plate_number"  => $request->plate_number,
                 "type"          => $request->type,
                 "brand"         => $request->brand,
@@ -80,8 +80,8 @@ class VehincleController extends Controller
         }
 
         DB::commit();
-        // Session::put('success', "Data vehincles success to created!");
-        return redirect()->to('vehincles')->with('success', 'Data vehincles success to created');
+        // Session::put('success', "Data vehicles success to created!");
+        return redirect()->to('vehicles')->with('success', 'Data vehicles success to created');
     }
 
     public function update(Request $request, $id){
@@ -101,14 +101,14 @@ class VehincleController extends Controller
 
         DB::beginTransaction();
         try {
-            $vehincle = Vehincle::find($id);
-            $vehincle->plate_number = $request->plate_number;
-            $vehincle->type      = $request->type;
-            $vehincle->brand     = $request->brand;
-            $vehincle->model     = $request->model;
-            $vehincle->ownership = $request->ownership;
-            $vehincle->fuel_type = $request->fuel_type;
-            $vehincle->save();
+            $vehicle = Vehicle::find($id);
+            $vehicle->plate_number = $request->plate_number;
+            $vehicle->type      = $request->type;
+            $vehicle->brand     = $request->brand;
+            $vehicle->model     = $request->model;
+            $vehicle->ownership = $request->ownership;
+            $vehicle->fuel_type = $request->fuel_type;
+            $vehicle->save();
         } catch (Exception $e) {
             DB::rollback();
             // Session::put('error', $e->getMessage());
@@ -116,14 +116,14 @@ class VehincleController extends Controller
         }
 
         DB::commit();
-        // Session::put('success', "Data vehincle success to updated!");
-        return redirect()->to('vehincles')->with('success', 'Data vehincles success to updated');
+        // Session::put('success', "Data vehicle success to updated!");
+        return redirect()->to('vehicles')->with('success', 'Data vehicles success to updated');
     }
     
     public function datatable(Request $request){
         $where = [];
 
-        $data = Vehincle::where($where)->get();
+        $data = Vehicle::where($where)->get();
 
         return datatables()->of($data)->toJson();
     }

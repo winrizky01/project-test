@@ -60,7 +60,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Masa Berakhir SIM</label>
-                                        <input type="text" class="form-control datetimepicker-input" id="license_expiry_date" name="license_expiry_date"/>
+                                        <div class="input-group date" id="license_expiry_date" data-target-input="nearest">
+                                            <input type="text" name="license_expiry_date" class="form-control datetimepicker-input" data-target="#license_expiry_date"/>
+                                            <div class="input-group-append" data-target="#license_expiry_date" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -128,6 +133,9 @@
     </div>
     <script>
         $(document).ready(function(){
+            $('#license_expiry_date').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
             $('#submit').click(function(){
                 $('#modal-confirm').modal('toggle');
             });

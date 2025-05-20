@@ -41,7 +41,7 @@
                         <h3 class="card-title">{{ $card_title }}</h3>
                     </div>
                     <!-- /.card-header -->
-                    <form id="form" method="POST" action="{{ url('drivers/store') }}">
+                    <form id="form" method="POST" action="{{ url('bookings/store') }}">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -94,8 +94,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="approver_level_1">Disetujui oleh (Level 1)</label>
-                                        <select name="approver_level_1" class="form-control" required>
+                                        <label for="approval_lv_1">Disetujui oleh</label>
+                                        <select name="approval_lv_1" class="form-control" required>
                                             <option value="">-- Pilih --</option>
                                             @foreach($approvals_lv_1 as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->role }}</option>
@@ -104,24 +104,24 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="approver_level_2">Disetujui oleh (Level 2)</label>
-                                        <select name="approver_level_2" class="form-control" required>
+                                        <label for="approval_level_2">Disetujui oleh (Level 2)</label>
+                                        <select name="approval_level_2" class="form-control" required>
                                             <option value="">-- Pilih --</option>
                                             @foreach($approvals_lv_2 as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->role }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!-- /.col -->
                             </div>
                             <!-- /.row -->
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <a href="{{ url('/vehincles') }}" class="btn btn-default">Cancel</a>
+                            <a href="{{ url('/bookings') }}" class="btn btn-default">Cancel</a>
                             <button type="submit" class="d-none" id="ok">Submit</button>
                             <button type="button" class="btn btn-primary" id="submit">Submit</button>
                         </div>    

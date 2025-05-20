@@ -71,7 +71,7 @@ class DriverController extends Controller
                 "phone_number"      => $request->phone_number,
                 "emergency_name"    => $request->emergency_name,
                 "emergency_phone"   => $request->emergency_phone ,
-                "status"            => $request->status,
+                "status"            => 'standby',
                 "license_expiry_date" => $request->license_expiry_date,
             ]);
         } catch (Exception $e) {
@@ -81,7 +81,6 @@ class DriverController extends Controller
         }
 
         DB::commit();
-        // Session::put('success', "Data vehincles success to created!");
         return redirect()->to('drivers')->with('success', 'Data driver success to created');
     }
 

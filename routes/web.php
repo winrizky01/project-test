@@ -38,40 +38,18 @@ Route::group(['middleware'=>['auth']], function(){
         Route::get('/select', [App\Http\Controllers\BookingController::class, 'search']);
         Route::get('/dataTable', [App\Http\Controllers\BookingController::class, 'datatable']);
         Route::get('/create', [App\Http\Controllers\BookingController::class, 'create']);
-        Route::get('/edit/{id}', [App\Http\Controllers\BookingController::class, 'edit']);
+        Route::get('/show/{id}', [App\Http\Controllers\BookingController::class, 'edit']);
         Route::post('/store', [App\Http\Controllers\BookingController::class, 'store']);
         Route::post('/update/{id}', [App\Http\Controllers\BookingController::class, 'update']);
     });
 
-    // Route::prefix('general')->group(function(){
-    //     Route::get('/select', [App\Http\Controllers\GeneralController::class, 'select']);
-    // });
-    // Route::prefix('queue')->group(function(){
-    //     Route::get('/', [App\Http\Controllers\QueueController::class, 'index']);
-    //     Route::get('/generate-queue', [App\Http\Controllers\QueueController::class, 'number_queue']);
-    //     Route::get('/dataTable', [App\Http\Controllers\QueueController::class, 'datatable']);
-    //     Route::get('/edit/{id}', [App\Http\Controllers\QueueController::class, 'edit']);
+    Route::prefix('/approvals')->group(function(){
+        Route::get('/', [App\Http\Controllers\ApprovalController::class, 'index']);
+        Route::get('/dataTable', [App\Http\Controllers\ApprovalController::class, 'datatable']);
+        Route::post('/{id}', [App\Http\Controllers\ApprovalController::class, 'approval']);
+    });
     
-    //     Route::post('/registration-queue', [App\Http\Controllers\QueueController::class, 'store']);
-    // });
-    // Route::prefix('patient')->group(function(){
-    //     Route::get('/', [App\Http\Controllers\PatientController::class, 'index']);
-    //     Route::get('/select', [App\Http\Controllers\PatientController::class, 'search']);
-    //     Route::get('/dataTable', [App\Http\Controllers\PatientController::class, 'datatable']);
-    //     Route::get('/registration-patient', [App\Http\Controllers\PatientController::class, 'create']);
-    //     Route::get('/edit/{id}', [App\Http\Controllers\PatientController::class, 'edit']);
-    //     Route::get('/history', [App\Http\Controllers\ReportController::class, 'history_patient']);
-    
-    //     Route::post('/registration-patient', [App\Http\Controllers\PatientController::class, 'store']);
-    //     Route::post('/registration-patient/update/{id}', [App\Http\Controllers\PatientController::class, 'update']);
-    // });
-    // Route::prefix('patient-exams')->group(function(){
-    //     Route::get('/', [App\Http\Controllers\PatientExamController::class, 'index']);
-    //     Route::get('/edit/{id}', [App\Http\Controllers\PatientExamController::class, 'index']);
-    //     Route::get('/dataTable', [App\Http\Controllers\PatientExamController::class, 'datatable']);
-
-    //     Route::post('/store', [App\Http\Controllers\PatientExamController::class, 'index']);
-    //     Route::post('/update/{id}', [App\Http\Controllers\PatientExamController::class, 'index']);
-
-    // });
+    Route::prefix('/report')->group(function(){
+        Route::get('/', [App\Http\Controllers\ReportController::class, 'index']);
+    });
 });

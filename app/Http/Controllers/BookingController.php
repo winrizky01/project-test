@@ -39,17 +39,17 @@ class BookingController extends Controller
     }
 
     public function edit(Request $request, $id){
-        $vehincle = Driver::find($id);
-        if(!$vehincle){
+        $booking = VehicleBooking::with(['vehicle', 'driver', 'approval_lv_1'])->find($id);
+        if(!$booking){
             Session::put('error','Opps, Data not found!');
             return redirect()->to('vehincles');
         }
 
-        $data["title"]      = "Edit Supir";
-        $data["card_title"] = "Edit Supir";
-        $data["data"]       = $vehincle;
+        $data["title"]      = "Lihat List Pesanan";
+        $data["card_title"] = "Lihat List Pesanan";
+        $data["data"]       = $booking;
 
-        $view = "pages.driver.edit";
+        $view = "pages.booking.edit";
 
         return view($view, $data);
     }

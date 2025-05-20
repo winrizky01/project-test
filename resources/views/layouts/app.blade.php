@@ -147,6 +147,22 @@
                                 <p>Pesanan</p>
                             </a>
                         </li>
+                        @auth
+                            @if(auth()->user()->role === 'approver' || auth()->user()->role === 'superadmin')
+                            <li class="nav-item">
+                                <a href="{{ url('/approvals') }}" class="nav-link">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>Persetujuan</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/report') }}" class="nav-link">
+                                    <i class="fas fa-circle nav-icon"></i>
+                                    <p>Laporan</p>
+                                </a>
+                            </li>
+                            @endif
+                        @endauth
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

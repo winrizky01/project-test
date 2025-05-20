@@ -20,4 +20,9 @@ class VehicleBooking extends Model
     {
         return $this->hasOne(Driver::class, 'id', 'driver_id');
     }
+
+    public function approval_lv_1()
+    {
+        return $this->hasOne(User::class, 'id', 'approval_level_1');
+    }
 }

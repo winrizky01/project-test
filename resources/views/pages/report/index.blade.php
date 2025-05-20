@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Tanggal</label>
+                                    <label>Rentang Tanggal</label>
                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
                                         <input type="text" class="form-control form-control-sm datetimepicker-input" id="datetimepickerValue" placeholder="MM/DD/YYYY" data-target="#reservationdate">
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">

@@ -41,65 +41,81 @@
                         <h3 class="card-title">{{ $card_title }}</h3>
                     </div>
                     <!-- /.card-header -->
-                    <form id="form" method="POST" action="{{ url('drivers/update').'/'.$data->id }}">
+                    <form id="form" method="POST" action="{{ url('bookings/store') }}">
                         @csrf
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Nama Supir</label>
-                                        <input type="text" class="form-control" id="name" name="name"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Nomer SIM</label>
-                                        <input type="text" class="form-control" id="license_number" name="license_number"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Masa Berakhir SIM</label>
-                                        <input type="text" class="form-control datetimepicker-input" id="license_expiry_date" name="license_expiry_date"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Nomer Hp</label>
-                                        <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Ex : BMW"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Nama Kontak Darurat</label>
-                                        <input type="text" class="form-control" id="emergency_name" name="emergency_name"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Hp Kontak Darurat</label>
-                                        <input type="text" class="form-control" id="emergency_phone" name="emergency_phone"/>
+                                        <label>Tanggal Pemakaian</label>
+                                        <div class="input-group date" id="booking_date" data-target-input="nearest">
+                                            <input type="text" name="booking_date" class="form-control datetimepicker-input" data-target="#booking_date" value="{{ $data->start_time }}"/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Status</label>
-                                        <select class="form-control" name="status">
-                                            <option value="">-- Pilih Status --</option>
-                                            <option value="aktif">Aktif</option>
-                                            <option value="nonaktif">Tidak Aktif</option>
-                                        </select>
+                                        <input type="text" name="booking_date" class="form-control" value="{{ $data->status }}"/>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pilih Kendaraan</label>
+                                        <input type="text" name="booking_date" class="form-control" value="{{ $data->vehicle->plate_number }} - {{ $data->vehicle->barnd }}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pilih Supir</label>
+                                        <input type="text" name="booking_date" class="form-control" value="{{ $data->driver->name }}"/>                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Lokasi Kendaraan</label>
+                                        <textarea class="form-control" id="location" name="location">{{ $data->location }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Tujuan Perjalanan</label>
+                                        <textarea class="form-control" id="destination" name="destination">{{ $data->destination }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Keterangan</label>
+                                        <textarea class="form-control" id="note" name="note">{{ $data->notes }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="approval_lv_1">Disetujui oleh</label>
+                                        <input type="text" name="booking_date" class="form-control" value="{{ $data->approval_lv_1->name }}"/>                                        
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="approval_level_2">Disetujui oleh (Level 2)</label>
+                                        <select name="approval_level_2" class="form-control" required>
+                                            <option value="">-- Pilih --</option>
+                                            @foreach($approvals_lv_2 as $user)
+                                                <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->role }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
                                 <!-- /.col -->
                             </div>
                             <!-- /.row -->
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <a href="{{ url('/vehincles') }}" class="btn btn-default">Cancel</a>
+                            <a href="{{ url('/bookings') }}" class="btn btn-default">Cancel</a>
                             <button type="submit" class="d-none" id="ok">Submit</button>
-                            <button type="button" class="btn btn-primary" id="submit">Update</button>
+                            <button type="button" class="btn btn-primary" id="submit">Submit</button>
                         </div>    
                     </form>
                 </div>
@@ -128,6 +144,11 @@
     </div>
     <script>
         $(document).ready(function(){
+            $('#form :input').prop('disabled', true);
+
+            $('#booking_date').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm'
+            });
             $('#submit').click(function(){
                 $('#modal-confirm').modal('toggle');
             });

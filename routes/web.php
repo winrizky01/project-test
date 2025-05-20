@@ -16,7 +16,6 @@ Route::group(['middleware'=>['auth']], function(){
 
     Route::prefix('/vehicles')->group(function(){
         Route::get('/', [App\Http\Controllers\VehicleController::class, 'index']);
-        Route::get('/select', [App\Http\Controllers\VehicleController::class, 'search']);
         Route::get('/dataTable', [App\Http\Controllers\VehicleController::class, 'datatable']);
         Route::get('/create', [App\Http\Controllers\VehicleController::class, 'create']);
         Route::get('/edit/{id}', [App\Http\Controllers\VehicleController::class, 'edit']);
@@ -26,7 +25,6 @@ Route::group(['middleware'=>['auth']], function(){
 
     Route::prefix('/drivers')->group(function(){
         Route::get('/', [App\Http\Controllers\DriverController::class, 'index']);
-        Route::get('/select', [App\Http\Controllers\DriverController::class, 'search']);
         Route::get('/dataTable', [App\Http\Controllers\DriverController::class, 'datatable']);
         Route::get('/create', [App\Http\Controllers\DriverController::class, 'create']);
         Route::get('/edit/{id}', [App\Http\Controllers\DriverController::class, 'edit']);
@@ -36,7 +34,6 @@ Route::group(['middleware'=>['auth']], function(){
 
     Route::prefix('/bookings')->group(function(){
         Route::get('/', [App\Http\Controllers\BookingController::class, 'index']);
-        Route::get('/select', [App\Http\Controllers\BookingController::class, 'search']);
         Route::get('/dataTable', [App\Http\Controllers\BookingController::class, 'datatable']);
         Route::get('/create', [App\Http\Controllers\BookingController::class, 'create']);
         Route::get('/show/{id}', [App\Http\Controllers\BookingController::class, 'edit']);

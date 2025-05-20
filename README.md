@@ -60,8 +60,10 @@
 
 ## Informasi Tambahan
 
-- Pastikan environment (`.env`) sudah diatur sesuai server produksi.
+- Pastikan environment (`.env`) sudah diatur sesuai server produksi, bila belum ada `env-example` sebagai contoh.
 - Jalankan perintah `composer install` untuk instalasi awal.
+- Jalankan `php artisan key:generate` untuk menghasilkan application key.
+- Jalankan `php artisan migrate` untuk menjalankan migrasi database.
 - Untuk menjalankan aplikasi lokal, gunakan `php artisan serve`.
 
 ---

@@ -13,8 +13,8 @@
                 </div>
                 <div class="toast-body">{{session('error')}}</div>
             </div>
-        </div>
-        @elseif (session('success'))
+        </div> --}}
+        @if (session('success'))
         <div id="toastsContainerTopRight" class="toasts-top-right fixed">
             <div class="toast bg-success fade show" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
@@ -26,7 +26,7 @@
                 <div class="toast-body">{{session('success')}}</div>
             </div>
         </div>
-        @endif --}}
+        @endif
         <!-- /.toast notification -->
 
         <!-- Content Header (Page header) -->
@@ -56,9 +56,13 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $card_title }}</h3>
                             <div class="card-tools">
-                                <a href="{{ url('/bookings/create') }}" class="btn btn-primary btn-sm" title="Buat Pesanan">
-                                    Buat Pesanan
-                                </a>
+                                @auth
+                                    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'superadmin')
+                                        <a href="{{ url('/bookings/create') }}" class="btn btn-primary btn-sm" title="Buat Pesanan">
+                                            Buat Pesanan
+                                        </a>
+                                    @endif
+                                @endauth
                             </div>
                         </div>
                         <div class="card-body">

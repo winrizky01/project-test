@@ -56,9 +56,13 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $card_title }}</h3>
                             <div class="card-tools">
-                                <a href="{{ url('/vehicles/create') }}" class="btn btn-primary btn-sm" title="Tambah Kendaraan">
-                                    Tambah Data Kendaraan
-                                </a>
+                                @auth
+                                    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'superadmin')
+                                        <a href="{{ url('/vehicles/create') }}" class="btn btn-primary btn-sm" title="Tambah Kendaraan">
+                                            Tambah Data Kendaraan
+                                        </a>
+                                    @endif
+                                @endauth
                             </div>
                         </div>
                         <div class="card-body">
